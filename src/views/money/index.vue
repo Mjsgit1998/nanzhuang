@@ -70,7 +70,7 @@
           </a>
         </div>
         <div class="demo_2">
-          <a href="">
+          <a href="javascript:;" @click="onTehui">
             <van-icon name="description" />
             <span>粉比权益</span>
           </a>
@@ -118,6 +118,9 @@ export default {
     },
     onLocation () {
       this.$router.push('/location')
+    },
+    onTehui () {
+      this.$router.push('/tehui')
     }
   }
 }

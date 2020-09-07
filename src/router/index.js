@@ -11,6 +11,7 @@ import Myfans from '../views/myfans'
 import Indent from '../views/indent'
 import Location from '../views/location'
 import Addlocation from '../views/addLocation'
+import Tehui from '../views/tehui'
 
 Vue.use(VueRouter)
 
@@ -59,6 +60,10 @@ const routes = [
   {
     path: '/addlocation',
     component: Addlocation
+  },
+  {
+    path: '/tehui',
+    component: Tehui
   }
 ]
 

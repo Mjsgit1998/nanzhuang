@@ -3,8 +3,13 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import '@vant/touch-emulator'
-import { Icon, NavBar, Col, Row, Tab, Tabs, Cell, CellGroup, Button, AddressEdit, Search, DatetimePicker, Popup } from 'vant'
+import { Icon, NavBar, Col, Row, Tab, Tabs, Cell, CellGroup, Button, AddressEdit, Search, DatetimePicker, Popup, Swipe, SwipeItem, Card } from 'vant'
 import './views/styles/index.less'
+
+Vue.use(Card)
+
+Vue.use(Swipe)
+Vue.use(SwipeItem)
 
 Vue.use(Popup)
 
