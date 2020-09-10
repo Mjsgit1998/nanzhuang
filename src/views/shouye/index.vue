@@ -27,45 +27,14 @@
         <van-swipe-item>4</van-swipe-item>
     </van-swipe>
     <!-- 中间的图片 -->
-    <div class="demo">
-     <router-link to='/home/shishang'>
+    <div v-for="item in imgs" :key="item.Id">
              <van-image
                 width="100%"
                 height="100%"
                 fit="fill"
-                :src="require('../../assets/images/首页_02.jpg')"
+               :src=item.image
                 />
-      </router-link>
-     </div>
-
-      <div class="demo">
-        <router-link to="/abstract">
-     <van-image
-                width="100%"
-                height="100%"
-                fit="fill"
-                :src="require('../../assets/images/首页_03.jpg')"
-                />
-        </router-link>
-     </div>
-      <div class="demo">
-        <router-link to="/Flash">
-     <van-image
-                width="100%"
-                height="100%"
-                fit="fill"
-                :src="require('../../assets/images/首页_04.jpg')"
-                />
-        </router-link>
-     </div>
-     <div class="demo5">
-     <van-image
-                width="100%"
-                height="100%"
-                fit="fill"
-                :src="require('../../assets/images/首页_05.jpg')"
-                />
-     </div>
+    </div>
 
   <!-- 点击开启或关闭左侧导航栏 -->
     <div class="close">
@@ -146,24 +115,19 @@ Vue.use(Toast)
 export default {
   data () {
     return {
-      show: false
+      show: false,
+      imgs: []
     }
   },
   components: {
     [Dialog.Component.name]: Dialog.Component
   },
   created () {
-    this.loading()
+    // this.loading()
     this.onloadimg()
   },
   methods: {
-    loading () {
-      Toast.loading({
-        message: '加载中...',
-        forbidClick: true,
-        loadingType: 'spinner'
-      })
-    },
+
     showPopup () {
       if (this.show === false) {
         this.show = true
@@ -173,7 +137,6 @@ export default {
     },
     onClickLeft () {
       // Toast('返回')
-
       Dialog.confirm({
         title: '返回登录',
         message: '确认返回吗'
@@ -203,6 +166,9 @@ export default {
         // Headers:{token:tokenn}
       }).then(res => {
         console.log(res)
+        this.imgs = res.data.data
+        this.imgs.shift(0)
+        console.log(this.imgs)
         if (res.data === 404) {
           Toast.success('登录超时,请重新登录')
           this.$router.push('/login')

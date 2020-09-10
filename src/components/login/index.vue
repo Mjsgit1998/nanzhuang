@@ -86,8 +86,31 @@ export default {
       }).then(res => {
         console.log(res)
         window.localStorage.setItem('token', res.data.data.token)
-        this.$router.push('/home')
+        this.success() // 调用登录成功的提示
+      }).catch(err => {
+        console.log(err)
+        Toast.fail('登录失败')
       })
+    },
+    // 登录成功的提示
+    success () {
+      const toast = Toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true,
+        message: '登录成功'
+      })
+      let second = 2
+      const timer = setInterval(() => {
+        second--
+        if (second) {
+          toast.message = '登录成功'
+        } else {
+          clearInterval(timer)
+          // 手动清除 Toast
+          Toast.clear()
+          this.$router.push('/home')
+        }
+      }, 1000)
     },
 
     validator (val) {
