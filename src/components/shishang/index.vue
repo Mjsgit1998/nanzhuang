@@ -85,27 +85,27 @@
 
       </div>
        <div class="ccc">
-        <van-row type="flex" @click="$router.push('/home')">
+        <van-row type="flex"    @click="showPopup">
           <van-col span="3"><van-icon name="wap-home-o" size="30px" color="white" /></van-col>
-          <van-col span="10"><span style="font-size:20px">首页</span></van-col>
+          <van-col span="10"><span style="font-size:20px" >首页</span></van-col>
         </van-row>
          <van-row type="flex">
           <van-col span="3"> <van-icon name="manager-o" color="white" size="30px"/></van-col>
           <van-col span="10"><span style="font-size:20px">我的信息</span></van-col>
         </van-row>
-         <van-row type="flex">
+         <van-row type="flex" @click="$router.push('/order')">
           <van-col span="3">  <van-icon name="orders-o" color="white" size="30px" /></van-col>
           <van-col span="10"><span style="font-size:20px">我的订单</span></van-col>
         </van-row>
-         <van-row type="flex"  @click="$router.push('/shopcar')">
+         <van-row type="flex" @click="$router.push('/shopcar')">
           <van-col span="3">   <van-icon name="cash-on-deliver" color="white" size="30px"/></van-col>
           <van-col span="12"><span style="font-size:20px">我的购物车</span></van-col>
         </van-row>
-         <van-row type="flex">
+         <van-row type="flex" @click="$router.push('/mysizenone')">
           <van-col span="3">    <van-icon name="flower-o" color="white" size="30px" /></van-col>
           <van-col span="10"><span style="font-size:20px">我的尺寸</span></van-col>
         </van-row>
-          <van-row type="flex">
+          <van-row type="flex" @click="$router.push('/money')">
           <van-col span="3">   <van-icon name="paid" color="white" size="30px" /></van-col>
           <van-col span="10"><span style="font-size:20px">我的钱包</span></van-col>
         </van-row>
@@ -113,7 +113,7 @@
           <van-col span="3"> <van-icon name="star-o" color="white" size="30px"/></van-col>
           <van-col span="10"><span style="font-size:20px">我的收藏</span></van-col>
         </van-row>
-          <van-row type="flex">
+          <van-row type="flex" @click="$router.push('/location')">
           <van-col span="3"> <van-icon name="location-o" color="white" size="30px"/></van-col>
           <van-col span="10"><span style="font-size:20px">我的地址</span></van-col>
         </van-row>

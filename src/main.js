@@ -12,6 +12,7 @@ Vue.use(GridItem)
 Vue.prototype.$axios = axios
 // axios.defaults.baseURL = 'http://'
 Vue.use(AddressEdit)
+
 Vue.use(Field)
 Vue.use(Form)
 Vue.use(Switch)

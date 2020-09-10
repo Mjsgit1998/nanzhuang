@@ -1,5 +1,6 @@
 <template>
 <div class="app">
+
   <div class="home" >
       <div class="topnav">
                <van-nav-bar title="我的代言费" id="nav" left-text="返回"  fixed left-arrow @click-left="onClickLeft">
@@ -136,8 +137,11 @@
 </div>
 </template>
 <script>
-import { Dialog, Toast } from 'vant'
+import { Dialog, Toast, Loading } from 'vant'
+
 import Vue from 'vue'
+
+Vue.use(Loading)
 Vue.use(Toast)
 export default {
   data () {
@@ -149,10 +153,17 @@ export default {
     [Dialog.Component.name]: Dialog.Component
   },
   created () {
+    this.loading()
     this.onloadimg()
   },
   methods: {
-
+    loading () {
+      Toast.loading({
+        message: '加载中...',
+        forbidClick: true,
+        loadingType: 'spinner'
+      })
+    },
     showPopup () {
       if (this.show === false) {
         this.show = true
@@ -180,20 +191,22 @@ export default {
       // Toast('按钮')
     },
     onloadimg () {
-      const tokenn = window.localStorage.getItem('token')
+      // const tokenn = window.localStorage.getItem('token')
       // console.log(tokenn)
       this.$axios({
         method: 'get',
-        url: 'http://fu.yimentu.com/bilang/api.php/index/index',
+        url: 'http://fu.yimentu.com/bilang/api.php/index/index'
         // data: {},
-        headers: {
-          // 'content-type': 'application/x-www-form-urlencoded',
-          token: tokenn
-
-        }
+        // headers: {
+        //   token: tokenn
+        // }
         // Headers:{token:tokenn}
       }).then(res => {
         console.log(res)
+        if (res.data === 404) {
+          Toast.success('登录超时,请重新登录')
+          this.$router.push('/login')
+        }
       })
     }
   }

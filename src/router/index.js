@@ -46,7 +46,7 @@ import outside from '../view/outside'
 import cuff from '../view/cuff'
 import measure from '../view/measure'
 
-// import axios from 'axios'
+import axios from 'axios'
 Vue.use(VueRouter)
 
 const routes = [{
@@ -216,30 +216,30 @@ const router = new VueRouter({
   routes
 })
 
-// axios.interceptors.request.use(function (config) {
-//   // 在发送请求之前做些什么
-//   // 在请求去拦截器 中config 是本次请求的一些相关配置 对象
-//   // config 就是最后要发给后台的那个配置对象
-//   // 我们可以在拦截器中对congig 进行统一配置 token
-//   // console.log('请求拦截器', config)
-//   const tokenn = window.localStorage.getItem('token')
-//   // 统一添加 token
-//   if (tokenn) {
-//     config.headers.token = tokenn
-//   }
-//   // return config 是通行的规则
-//   return config
-// }, function (error) {
-//   // 对请求错误做些什么
-//   return Promise.reject(error)
-// })
+axios.interceptors.request.use(function (config) {
+  // 在发送请求之前做些什么
+  // 在请求去拦截器 中config 是本次请求的一些相关配置 对象
+  // config 就是最后要发给后台的那个配置对象
+  // 我们可以在拦截器中对congig 进行统一配置 token
+  // console.log('请求拦截器', config)
+  const tokenn = window.localStorage.getItem('token')
+  // 统一添加 token
+  if (tokenn) {
+    config.headers.token = tokenn
+  }
+  // return config 是通行的规则
+  return config
+}, function (error) {
+  // 对请求错误做些什么
+  return Promise.reject(error)
+})
 
-// // 添加响应拦截器
-// axios.interceptors.response.use(function (response) {
-//   // 对响应数据做点什么
-//   return response
-// }, function (error) {
-//   // 对响应错误做点什么
-//   return Promise.reject(error)
-// })
+// 添加响应拦截器
+axios.interceptors.response.use(function (response) {
+  // 对响应数据做点什么
+  return response
+}, function (error) {
+  // 对响应错误做点什么
+  return Promise.reject(error)
+})
 export default router
