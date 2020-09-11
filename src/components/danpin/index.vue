@@ -97,7 +97,7 @@
                             :src="require('../../assets/images/图文-01.jpg')"
                             />
                  <div ref="dd" v-html="goods.detail"></div>
-            <div class="shopcar"><van-button  @click="$router.push('/shopcar')" icon="cart" color="white" type="info"></van-button> </div>
+            <div class="shopcar"><van-button  @click="goshopcar" icon="cart" color="white" type="info"></van-button> </div>
              <!-- 点击开启或关闭左侧导航栏 -->
                 <div class="close">
                     <van-button
@@ -192,6 +192,20 @@ export default {
     this.getgood()
   },
   methods: {
+    goshopcar () {
+      const user = window.localStorage.getItem('user-id')
+      this.$axios({
+        method: 'post',
+        url: 'http://fu.yimentu.com/bilang/api.php/cart/add',
+        data: {
+          user_id: user,
+          goods_id: this.$route.params.good_id
+        }
+      }).then(res => {
+        console.log(res)
+      })
+      // $router.push('/shopcar')
+    },
     getgood () {
       this.$axios({
         method: 'post',

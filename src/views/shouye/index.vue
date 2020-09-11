@@ -163,7 +163,6 @@ export default {
         // headers: {
         //   token: tokenn
         // }
-        // Headers:{token:tokenn}
       }).then(res => {
         console.log(res)
         this.imgs = res.data.data

@@ -116,12 +116,12 @@ export default {
     },
     // 修改过后的地址
     onRenew (val) {
-      // const user = window.localStorage.getItem('user-id')
+      const user = window.localStorage.getItem('user-id')
       this.$axios({
         method: 'post',
         url: 'http://fu.yimentu.com/bilang/api.php/address/update',
         data: {
-          // user_id: user,
+          user_id: user,
           id: this.$route.params.addId,
           name: val.name,
           tel: val.tel,
@@ -137,14 +137,14 @@ export default {
     },
     // 新创建的地址
     onNew (val) {
-      // const user = window.localStorage.getItem('user-id')
+      const user = window.localStorage.getItem('user-id')
       this.$axios({
         method: 'post',
         url: 'http://fu.yimentu.com/bilang/api.php/address/add',
         data: {
           name: val.name,
           tel: val.tel,
-          // user_id: user,
+          user_id: user,
           address: val.addressDetail,
           area: `${val.province}${val.city}${val.county}`,
           default: val.isDefault

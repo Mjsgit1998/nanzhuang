@@ -227,11 +227,11 @@ axios.interceptors.request.use(function (config) {
   // 我们可以在拦截器中对congig 进行统一配置 token
   // console.log('请求拦截器', config)
   const tokenn = window.localStorage.getItem('token')
-  const userId = window.localStorage.getItem('user-id')
+  // const userId = window.localStorage.getItem('user-id')
   // 统一添加 token
-  if (tokenn || userId) {
+  if (tokenn) {
     config.headers.token = tokenn
-    config.data.user_id = userId
+    // config.data.user_id = userId
   }
   // return config 是通行的规则
   return config
@@ -249,16 +249,16 @@ axios.interceptors.response.use(function (response) {
   return Promise.reject(error)
 })
 
-router.beforeEach((to, from, next) => {
-  if (to.path === '/login') {
-    next()
-    return
-  }
-  const token = window.localStorage.getItem('user-token')
-  if (token) {
-    next()
-  } else {
-    next('/login')
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/login') {
+//     next()
+//     return
+//   }
+//   const token = window.localStorage.getItem('user-token')
+//   if (token) {
+//     next()
+//   } else {
+//     next('/login')
+//   }
+// })
 export default router

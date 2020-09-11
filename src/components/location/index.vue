@@ -73,11 +73,11 @@ export default {
         })
     },
     onload () {
-      // const user = window.localStorage.getItem('user-id')
+      const user = window.localStorage.getItem('user-id')
       this.$axios({
         method: 'post',
         url: 'http://fu.yimentu.com/bilang/api.php/address/index',
-        data: { }
+        data: { user_id: user }
       }).then(res => {
         console.log(res)
         this.address = res.data.data
