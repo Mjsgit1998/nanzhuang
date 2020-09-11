@@ -1,6 +1,6 @@
 <template>
     <div style="background: #eeeeee; height:100vh;">
-        <van-nav-bar title="限时特惠" left-text="返回" left-arrow>
+        <van-nav-bar title="限时特惠" left-text="返回" left-arrow  @click-left="onClickLeft">
             <template #right>
                 <van-icon name="ellipsis" size="18" />
             </template>
@@ -50,75 +50,53 @@
             </div>
         </div>
 
-        <div class="banner">
+        <div class="banner" v-for="item in artical" :key="item.Id">
             <div class="imgs">
-                <img src="../../assets/评价_03.jpg" alt="">
+                <img :src="`http://fu.yimentu.com/${item.image}`" alt="">
             </div>
             <div class="banner_1">
                 <p>春秋商务休闲加肥加大胖子<br />
                 衬衣肥佬宽松中年正装场...</p>
-                <span>￥199.00</span>
-                <span style="text-decoration:line-through;color:#666666">￥2000.00</span>
+                <span>￥{{item.zk_price}}</span>
+                <span style="text-decoration:line-through;color:#666666">￥{{item.y_price}}</span>
             </div>
             <div class="banner_2">
-                <p>去抢购</p>
-                <a href="javascript:;"><img src="../../assets/我的订单-订单详情_03.jpg" alt=""></a>
+                <p @click="$router.push('/home/shishang/'+item.Id)">去抢购</p>
+                <a href="javascript:;" @click="$router.push('/home/shishang/'+item.Id)"><img src="../../assets/我的订单-订单详情_03.jpg" alt=""></a>
             </div>
         </div>
 
-        <div class="banner">
-            <div class="imgs">
-                <img src="../../assets/评价_03.jpg" alt="">
-            </div>
-            <div class="banner_1">
-                <p>春秋商务休闲加肥加大胖子<br />
-                衬衣肥佬宽松中年正装场...</p>
-                <span>￥199.00</span>
-                <span style="text-decoration:line-through;color:#666666">￥2000.00</span>
-            </div>
-            <div class="banner_2">
-                <p>去抢购</p>
-                <a href="javascript:;"><img src="../../assets/我的订单-订单详情_03.jpg" alt=""></a>
-            </div>
-        </div>
-
-        <div class="banner">
-            <div class="imgs">
-                <img src="../../assets/评价_03.jpg" alt="">
-            </div>
-            <div class="banner_1">
-                <p>春秋商务休闲加肥加大胖子<br />
-                衬衣肥佬宽松中年正装场...</p>
-                <span>￥199.00</span>
-                <span style="text-decoration:line-through;color:#666666">￥2000.00</span>
-            </div>
-            <div class="banner_2">
-                <p>去抢购</p>
-                <a href="javascript:;"><img src="../../assets/我的订单-订单详情_03.jpg" alt=""></a>
-            </div>
-        </div>
-
-        <div class="banner">
-            <div class="imgs">
-                <img src="../../assets/评价_03.jpg" alt="">
-            </div>
-            <div class="banner_1">
-                <p>春秋商务休闲加肥加大胖子<br />
-                衬衣肥佬宽松中年正装场...</p>
-                <span>￥199.00</span>
-                <span style="text-decoration:line-through;color:#666666">￥2000.00</span>
-            </div>
-            <div class="banner_2">
-                <p>去抢购</p>
-                <a href="javascript:;"><img src="../../assets/我的订单-订单详情_03.jpg" alt=""></a>
-            </div>
-        </div>
     </div>
 </template>
 
 <script>
 export default {
+  data () {
+    return {
+      artical: []
+    }
+  },
+  created () {
+    this.onload()
+  },
+  methods: {
+    onClickLeft () {
+      this.$router.push('/home')
+    },
+    onload () {
+      this.$axios({
+        method: 'post',
+        url: 'http://fu.yimentu.com/bilang/api.php/goods/index',
+        data: {
+          menu_id: 4
+        }
+      }).then(res => {
+        console.log(res)
+        this.artical = res.data.data
+      })
+    }
 
+  }
 }
 </script>
 

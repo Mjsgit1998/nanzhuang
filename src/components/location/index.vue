@@ -1,35 +1,26 @@
 <template>
   <div style="background:#eeeeee;height:100vh;">
-      <van-nav-bar title="我的地址" left-text="返回" left-arrow
+      <van-nav-bar title="我的地址" left-text="返回" left-arrow fixed
       @click-left="onClickLeft">
         <template #right>
           <van-icon name="ellipsis" size="18" />
         </template>
       </van-nav-bar>
-
-      <div class="demo">
+   <div style="height:46px"></div>
+      <div class="demo" v-for="item in address" :key="item.Id">
          <div>
-              <p>李先生 13423433424</p>
-          <span>广东省佛山市禅城区印象购物中心5号楼b-101122<br />
-           1902室</span>
+              <p>{{item.name}} {{item.tel}}</p>
+          <span>{{item.area}}<br />
+           {{item.address}}</span>
          </div>
-         <div style="margin:10px 0 0 20px;" @click="onLocation">
+         <div style="margin:10px 0 0 20px;" @click="$router.push('/addlocation/'+item.Id)">
            <van-icon name="edit" />
          </div>
-           <div class="demo1">
-               默认
+           <div class="demo1" @click="onDelet(item.Id)">
+             删除
            </div>
-      </div>
+           <div v-if="item.default==1">默认地址</div>
 
-      <div class="demo" style="margin-top:6px;">
-         <div>
-              <p>李先生 13423433424</p>
-          <span>广东省佛山市禅城区印象购物中心5号楼b-101122<br />
-           1902室</span>
-         </div>
-        <div style="margin:10px 0 0 20px;" >
-           <van-icon @click="onLocation" name="edit" />
-         </div>
       </div>
 
       <van-button color="#234497" @click="onAddlocation">添加新地址</van-button>
@@ -37,18 +28,70 @@
 </template>
 
 <script>
-export default {
+import { Dialog, Toast, Loading } from 'vant'
 
+import Vue from 'vue'
+Vue.use(Loading)
+Vue.use(Toast)
+export default {
+  data () {
+    return {
+      address: []
+    }
+  },
+  components: {
+    [Dialog.Component.name]: Dialog.Component
+  },
+  created () {
+    this.onload()
+  },
   methods: {
+
+    onDelet (index) {
+      const user = window.localStorage.getItem('user-id')
+      Dialog.confirm({
+        title: '确认删除吗',
+        message: ''
+      })
+        .then(() => {
+          // on confirm
+          this.$axios({
+            method: 'post',
+            url: 'http://fu.yimentu.com/bilang/api.php/address/delete',
+            data: {
+              user_id: user,
+              id: index
+            }
+          }).then(res => {
+            console.log(res)
+            this.onload()
+            Toast.success('删除成功')
+          })
+        })
+        .catch(() => {
+          // on cancel
+        })
+    },
+    onload () {
+      // const user = window.localStorage.getItem('user-id')
+      this.$axios({
+        method: 'post',
+        url: 'http://fu.yimentu.com/bilang/api.php/address/index',
+        data: { }
+      }).then(res => {
+        console.log(res)
+        this.address = res.data.data
+      })
+    },
     onClickLeft () {
       this.$router.push('/home')
     },
     onAddlocation () {
       this.$router.push('/addlocation')
-    },
-    onLocation () {
-      this.$router.push('/addlocation')
     }
+    // onLocation () {
+    //   this.$router.push('/addlocation')
+    // }
   }
 }
 </script>
@@ -69,6 +112,7 @@ export default {
 /deep/ .van-icon-ellipsis::before{
   color:#fff;
 }
+
 .demo{
     background: #fff;
     display:flex;
@@ -76,6 +120,7 @@ export default {
     height:90px;
     padding-left:8px;
     margin-top:20px;
+
     p{
         margin-bottom:5px;
     }

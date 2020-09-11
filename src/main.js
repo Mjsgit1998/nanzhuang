@@ -7,6 +7,7 @@ import axios from 'axios'
 import './components/styles/index.less'
 // 设置常态路径
 import { Overlay, Toast, Dialog, GridItem, Grid, Icon, NavBar, DatetimePicker, Search, Tab, Tabs, Swipe, SwipeItem, AddressEdit, Image as VanImage, Popup, Cell, CellGroup, Button, Col, Row, Rate, Divider, Checkbox, CheckboxGroup, Card, Stepper, SubmitBar, Switch, Form, Field } from 'vant'
+
 Vue.use(Grid)
 Vue.use(GridItem)
 Vue.prototype.$axios = axios

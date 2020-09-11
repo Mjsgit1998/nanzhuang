@@ -71,11 +71,11 @@ const routes = [{
     path: '/shopcar/jiesuan',
     component: jiesuan
   }, {
-    path: '/home/shishang',
+    path: '/home/2',
     component: shishang
 
   }, {
-    path: '/home/shishang/id',
+    path: '/home/shishang/:good_id',
     component: danpin
   }, {
     path: '/money',
@@ -121,7 +121,11 @@ const routes = [{
     path: '/addlocation',
     component: Addlocation
   }, {
-    path: '/message',
+    path: '/addlocation/:addId',
+    component: Addlocation
+  },
+  {
+    path: '/home/3',
     component: message
   },
   {
@@ -145,7 +149,7 @@ const routes = [{
     component: evaluation
   },
   {
-    path: '/Flash',
+    path: '/home/4',
     component: Flash
   }, {
     path: '/mysizenone',
@@ -223,9 +227,11 @@ axios.interceptors.request.use(function (config) {
   // 我们可以在拦截器中对congig 进行统一配置 token
   // console.log('请求拦截器', config)
   const tokenn = window.localStorage.getItem('token')
+  const userId = window.localStorage.getItem('user-id')
   // 统一添加 token
-  if (tokenn) {
+  if (tokenn || userId) {
     config.headers.token = tokenn
+    config.data.user_id = userId
   }
   // return config 是通行的规则
   return config
@@ -241,5 +247,18 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
   // 对响应错误做点什么
   return Promise.reject(error)
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login') {
+    next()
+    return
+  }
+  const token = window.localStorage.getItem('user-token')
+  if (token) {
+    next()
+  } else {
+    next('/login')
+  }
 })
 export default router

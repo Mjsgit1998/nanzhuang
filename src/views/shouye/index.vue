@@ -27,7 +27,7 @@
         <van-swipe-item>4</van-swipe-item>
     </van-swipe>
     <!-- 中间的图片 -->
-    <div v-for="item in imgs" :key="item.Id">
+    <div v-for="item in imgs" :key="item.Id" @click="$router.push('/home/'+item.Id)">
              <van-image
                 width="100%"
                 height="100%"
@@ -169,10 +169,10 @@ export default {
         this.imgs = res.data.data
         this.imgs.shift(0)
         console.log(this.imgs)
-        if (res.data === 404) {
-          Toast.success('登录超时,请重新登录')
-          this.$router.push('/login')
-        }
+        // if (res.data === 404) {
+        //   Toast.success('登录超时,请重新登录')
+        //   this.$router.push('/login')
+        // }
       })
     }
   }

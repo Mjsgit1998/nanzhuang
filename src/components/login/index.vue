@@ -86,6 +86,7 @@ export default {
       }).then(res => {
         console.log(res)
         window.localStorage.setItem('token', res.data.data.token)
+        window.localStorage.setItem('user-id', res.data.data.Id)
         this.success() // 调用登录成功的提示
       }).catch(err => {
         console.log(err)

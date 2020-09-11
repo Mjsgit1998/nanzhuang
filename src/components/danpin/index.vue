@@ -2,7 +2,7 @@
   <div class="danpin">
         <div class="home">
              <div class="topnav">
-               <van-nav-bar title="我的代言费" id="nav" left-text="返回"  fixed left-arrow @click-left="onClickLeft">
+               <van-nav-bar :title="goods.clothing_title" id="nav" left-text="返回"  fixed left-arrow @click-left="onClickLeft">
                    <template #right>
                         <van-icon color="white" name="ellipsis" size="18" />
                         </template>
@@ -10,16 +10,21 @@
             </div>
             <div style="height:46px"></div>
            <div :class="{rightmove:this.show==true}">
-            <van-swipe class="my-swipe"   indicator-color="white">
-                <van-swipe-item>
+            <van-swipe class="my-swipe"  :autoplay="3000"  indicator-color="white">
+                <van-swipe-item v-for="(item,index) in ban" :key="index">
                      <van-image
                             width="100%"
-                            height="100%"
+                            height="414px"
                             fit="cover"
-                        :src="require('../../assets/images/单品_02.jpg')"
+                        :src="`http://fu.yimentu.com/${item}`"
                     />
                 </van-swipe-item>
             </van-swipe>
+             <div class="wenzi">
+                <div>{{goods.clothing_title}}</div>
+                <div>sportman leisuer suit</div>
+                <div>${{goods.y_price}}</div>
+            </div>
             <!-- 商品评价 -->
            <div class="commit">
                 <van-row>
@@ -91,12 +96,7 @@
                             width="100%"
                             :src="require('../../assets/images/图文-01.jpg')"
                             />
-
-            <div class="wenzi">
-                <div>休闲型深灰色男士衬衫</div>
-                <div>sportman leisuer suit</div>
-                <div>$899.00</div>
-            </div>
+                 <div ref="dd" v-html="goods.detail"></div>
             <div class="shopcar"><van-button  @click="$router.push('/shopcar')" icon="cart" color="white" type="info"></van-button> </div>
              <!-- 点击开启或关闭左侧导航栏 -->
                 <div class="close">
@@ -183,11 +183,28 @@ export default {
     return {
       show: false,
       zhe: false,
-      value: 3
+      value: 3,
+      goods: {},
+      ban: ''
     }
   },
+  created () {
+    this.getgood()
+  },
   methods: {
-
+    getgood () {
+      this.$axios({
+        method: 'post',
+        url: 'http://fu.yimentu.com/bilang/api.php/goods/detail',
+        data: { goods_id: this.$route.params.good_id }
+      }).then(res => {
+        console.log(res)
+        this.goods = res.data.data
+        this.ban = this.goods.banner.split(',')
+        console.log(this.goods)
+        // this.$refs.dd.innerHTML = this.goods.detail
+      })
+    },
     showPopup () {
       if (this.show === false) {
         this.show = true
@@ -197,7 +214,7 @@ export default {
     },
     onClickLeft () {
       // Toast('返回')
-      this.$router.push('/home/shishang')
+      this.$router.go(-1)
     },
     onClickRight () {
     //   Toast('按钮')
@@ -220,6 +237,7 @@ export default {
        width: 100%;
        height: 100%;
       overflow: hidden;
+      // box-sizing: border-box;
    }
   .topnav{
 
@@ -243,8 +261,8 @@ export default {
   .wenzi{
 
       width: 100%;
-      height: 120px;
-      box-sizing: border-box;
+      // height: 120px;
+      // box-sizing: border-box;
 
     div{
         width: 100%;
